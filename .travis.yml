@@ -36,9 +36,9 @@ env:
   - RELEASE_BRANCH=master
 
 script:
+  - eval "${MATRIX_EVAL}"
+  - mkdir build && cd build
   - |
-      eval "${MATRIX_EVAL}"
-      mkdir build && cd build
       if [ ${TRAVIS_OS_NAME} = 'windows' ]; then
         powershell -Command "Set-ExecutionPolicy Unrestricted"
         cmake .. -G "Visual Studio 15 2017 Win64" -DCMAKE_INSTALL_PREFIX=$PWD/../bin
@@ -47,7 +47,7 @@ script:
         cmake .. -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$PWD/../bin
         cmake --build . --target install
       fi
-      cd ..
+  - cd ..
 
 before_deploy:
   - |
