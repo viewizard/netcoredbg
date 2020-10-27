@@ -22,6 +22,7 @@ matrix:
       dist: focal
       arch: arm64-graviton2
       virt: vm
+      group: edge
       env: MATRIX_EVAL="CC=clang-9 && CXX=clang++-9"
       addons:	
         apt:	
