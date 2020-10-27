@@ -18,17 +18,6 @@ matrix:
           packages:
           - llvm-9	
           - clang-9
-    - os: linux
-      dist: focal
-      arch: arm64-graviton2
-      virt: vm
-      group: edge
-      env: MATRIX_EVAL="CC=clang-9 && CXX=clang++-9"
-      addons:	
-        apt:	
-          packages:
-          - llvm-9	
-          - clang-9
     - os: osx
       osx_image: xcode12
     - os: windows
@@ -50,6 +39,7 @@ script:
   - eval "${MATRIX_EVAL}"
   - mkdir build && cd build
   - |
+      set -e
       if [ ${TRAVIS_OS_NAME} = 'windows' ]; then
         powershell -Command "Set-ExecutionPolicy Unrestricted"
         cmake .. -G "Visual Studio 15 2017 Win64" -DCMAKE_INSTALL_PREFIX=$PWD/../bin
@@ -62,6 +52,7 @@ script:
 
 before_deploy:
   - |
+      set -e
       if [ "$TRAVIS_BRANCH" = "$RELEASE_BRANCH" -a "$TRAVIS_PULL_REQUEST" = "false" ]; then
 
         if [[ -z "$TRAVIS_TAG" ]]; then
