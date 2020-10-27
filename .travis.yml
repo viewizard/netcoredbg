@@ -18,6 +18,10 @@ matrix:
           packages:
           - llvm-9	
           - clang-9
+    - os: linux
+      arch:
+      - arm64
+      env: MATRIX_EVAL="CC=clang && CXX=clang++"
     - os: osx
       osx_image: xcode12
     - os: windows
@@ -66,7 +70,7 @@ before_deploy:
         if [ ${TRAVIS_OS_NAME} = 'windows' ]; then
           7z a netcoredbg-win64.zip netcoredbg
         elif [ ${TRAVIS_OS_NAME} = 'linux' ]; then
-          tar cfz netcoredbg-${TRAVIS_OS_NAME}-${TRAVIS_DIST}.tar.gz ./netcoredbg/*
+          tar cfz netcoredbg-${TRAVIS_OS_NAME}-${TRAVIS_DIST}-${TRAVIS_CPU_ARCH}.tar.gz ./netcoredbg/*
         else
           tar cfz netcoredbg-${TRAVIS_OS_NAME}.tar.gz ./netcoredbg/*
         fi
