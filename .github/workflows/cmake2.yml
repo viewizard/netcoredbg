@@ -40,9 +40,16 @@ jobs:
       # Execute the build.  You can specify a specific target with "--target <NAME>"
       run: cmake --build . --config $BUILD_TYPE
 
-    - name: Test
-      working-directory: ${{runner.workspace}}/build
-      shell: bash
-      # Execute tests defined by the CMake configuration.  
-      # See https://cmake.org/cmake/help/latest/manual/ctest.1.html for more detail
-      run: ctest -C $BUILD_TYPE
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+        with:
+          release_name: Release test
+          body: |
+            Changes in this Release
+            - First Change
+            - Second Change
+          draft: true
+          prerelease: true
