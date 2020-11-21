@@ -1,4 +1,4 @@
-name: linux
+name: CMake
 
 on:
   workflow_dispatch:
